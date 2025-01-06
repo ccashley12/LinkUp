@@ -1,4 +1,6 @@
-## Meet up App
+## Meet Up App
+The Meet Up App is bringing locals together in all cities world wide! On the Meet Up app you will be able to see events in your city and details about each events! This meet up app is a serverless, progressive web application (PWA) with React using a test-driven development (TDD) technique. The application uses the Google Calendar API to fetch upcoming events.
+
 ### App Key Features
 **Feature 1 - Filter Events by City**  <br>
 <ins>USER STORY:</ins>
