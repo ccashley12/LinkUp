@@ -1,6 +1,6 @@
 ## Meet up App
 ### App Key Features
-**Feature 1** - Filter Events by City
+**Feature 1** - Filter Events by City  <br>
 USER STORY:
 - AS a user,
 - I should be able to filter events by a city
