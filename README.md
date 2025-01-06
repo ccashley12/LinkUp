@@ -96,7 +96,7 @@ User can install the meet app as a shortcut on their device home screen.
 - WHEN using their device OS 
 - THEN the shortcut will be added on their device 
 
-**There is nothing a programmer can do in this case, it cannot be tested.**
+*There is nothing a programmer can do in this case, it cannot be tested.*
 
 **Feature 6 - Display Charts Visualizing Event Details**  <br>
 <ins>USER STORY:</ins>
