@@ -1,7 +1,7 @@
 ## Meet up App
 ### App Key Features
-**Feature 1** - <ins>Filter Events by City</ins>  <br>
-USER STORY:
+**Feature 1 - Filter Events by City**  <br>
+<ins>USER STORY:</ins>
 - AS a user,
 - I should be able to filter events by a city
 - SO that I can see a list of events in that specified city
@@ -24,8 +24,8 @@ User can select a city from the suggested list.
 - WHEN the user selects a city (e.g. "Atlanta, Georgia") from the list
 - THEN user's city will be changed to that city AND the user will recieved a list of upcoming events in that city
 
-**Feature 2** - Show/Hide Event Details  <br>
-USER STORY:
+**Feature 2 - Show/Hide Event Details**  <br>
+<ins>USER STORY:</ins>
 - AS a user
 - I should be able to view or hide event details
 - SO they will not always be displayed or hidden
@@ -48,8 +48,8 @@ User can collapse an event to hide details.
 - WHEN they click "Hide details" button
 - THEN event details will be hidden
 
-**Feature 3** - Specify Number of Events  <br>
-USER STORY:
+**Feature 3 - Specify Number of Events**  <br>
+<ins>USER STORY:</ins>
 - AS a user
 - I should be able to specify number of events
 - SO that the desired amount of events will be displayed
@@ -66,8 +66,8 @@ User can change the number of events displayed.
 - WHEN searching for events in a city
 - THEN the specified amount of events will be displayed
 
-**Feature 4** - Use the App When Offline  <br>
-USER STORY:
+**Feature 4 - Use the App When Offline**  <br>
+<ins>USER STORY:</ins>
 - AS a user
 - I want to use the app when offline
 - SO the app is available without internet connection
@@ -84,8 +84,8 @@ Show error when user changes search settings (city, number of events).
 - WHEN the user selects a city different from dropdown and/or changes the number of events to display
 - THEN an error message will be displayed saying "No events found. Please try again."
 
-**Feature 5** - Add an App Shortcut to the Home Screen  <br>
-USER STORY:
+**Feature 5 - Add an App Shortcut to the Home Screen**  <br>
+<ins>USER STORY:</ins>
 - AS a user
 - I want to add a shortcut for the app on my home screen
 - SO I can access the app more efficiently 
@@ -98,8 +98,8 @@ User can install the meet app as a shortcut on their device home screen.
 
 **There is nothing a programmer can do in this case, it cannot be tested.**
 
-**Feature 6** - Display Charts Visualizing Event Details  <br>
-USER STORY:
+**Feature 6 - Display Charts Visualizing Event Details**  <br>
+<ins>USER STORY:</ins>
 - AS a user
 - I can view event details in a chart
 - SO I can easily understand the event data
