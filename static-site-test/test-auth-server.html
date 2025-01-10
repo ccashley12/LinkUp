@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Auth Server</title>
 </head>
+
 <body>
     <style>
     #container {
@@ -41,7 +42,7 @@
 
         const getAuthURL = "https://7kmlfvrs9g.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url";
 
-        getAuthUrlButton.onClick = function () {
+        getAuthUrlButton.onclick = function () {
             fetch(getAuthURL)
                 .then(function (response) {
                     return response.json();
@@ -59,7 +60,7 @@
         const accessTokenElement = document.getElementbyId("accessToken");
         const getToken = "https://7kmlfvrs9g.execute-api.us-east-2.amazonaws.com/dev/api/token";
 
-        getAccessToken.onClick = function () {
+        getAccessToken.onclick = function () {
             let code = codeValue.value;
 
             if (decodeURIComponent(code) === code) {
