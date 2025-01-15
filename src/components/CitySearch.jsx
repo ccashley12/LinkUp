@@ -5,10 +5,6 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
     const [query, setQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
 
-    useEffect(() => {
-        setSuggestions(allLocations);
-    }, [`${allLocations}`]);
-
     const handleInputChanged = (event) => {
         const value = event.target.value;
         const filteredLocations = allLocations ? allLocations.filter((location) => {
@@ -26,6 +22,10 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
         setCurrentCity(value);
     };
 
+    useEffect(() => {
+        setSuggestions(allLocations);
+    }, [`${allLocations}`]);
+
     return (
         <div id="city-search">
             <input
@@ -36,14 +36,20 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
                 onFocus={() => setShowSuggestions(true)}
                 onChange={handleInputChanged}
             />
-            {showSuggestions ? <ul className="suggestions">
-                {suggestions.map((suggestion) => {
-                    return <li onClick={handleItemClicked} key={suggestion}>{suggestion}</li>
-                })}
-                <li key='See all cities' onClick={handleItemClicked}>
-                    <b>See all cities</b>
-                </li>
-            </ul> : null}
+            {showSuggestions ? 
+                <ul className="suggestions">
+                    {suggestions.map((suggestion) => {
+                        return <li 
+                                    onClick={handleItemClicked} 
+                                    key={suggestion}>{suggestion}
+                                </li>
+                    })}
+                    <li key='See all cities' 
+                        onClick={handleItemClicked}
+                    >
+                        <b>See all cities</b>
+                    </li>
+                </ul> : null}
         </div>
     );
 }
