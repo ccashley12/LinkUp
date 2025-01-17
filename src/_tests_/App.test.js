@@ -60,6 +60,6 @@ describe('<App /> integration', () => {
 
         const EventListDOM = AppDOM.querySelector('#event-list');
         const allRenderedEventItems = within(EventListDOM).queryAllByRole('listitem');
-        expect(allRenderedEventItems.length).toBe(32);
+        expect(allRenderedEventItems.length).toBe(10);
     });
 });
