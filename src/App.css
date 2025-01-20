@@ -1,7 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
+
 .App {
   text-align: center;
-  padding: 2% 5%;
+  margin: 70px auto 2%;
+
+  @media screen and (min-width: 1280px) {
+    margin-top: 2%;
+  }
 }
 
 .App * {
@@ -34,17 +39,22 @@ input[type="number"] {
   width: 250px;
 }
 
-#city-search {
+#city-search, #number-of-events {
   display: flex;
   flex-direction: column;
   margin: auto;
   position: relative;
 }
 
+label {
+  font-weight: 600;
+  margin: 16px;
+}
+
 .suggestions {
   width: 250px;
   position: absolute;
-  top: 45px;
+  top: 90px;
   z-index: 2;
   align-self: center;
   margin: 0;
@@ -66,6 +76,15 @@ input[type="number"] {
 
 .suggestions > li:hover {
   background-color: #bcdcdb;
+}
+
+.event-list-container {
+  width: 95%;
+  margin: 60px auto;
+
+  @media screen and (min-width: 1280px) {
+    width: 60%;
+  }
 }
 
 .eventSummary {
