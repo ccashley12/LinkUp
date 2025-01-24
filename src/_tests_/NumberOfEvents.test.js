@@ -1,7 +1,8 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render,within } from "@testing-library/react";
 import NumberOfEvents from "../components/NumberOfEvents";
 import userEvent from "@testing-library/user-event";
+import App from "../App";
 
 describe('<NumberOfEvents /> Component', () => {
     let NumberOfEventsComponent;
@@ -10,6 +11,7 @@ describe('<NumberOfEvents /> Component', () => {
             <NumberOfEvents
                 currentNOE={32} 
                 setCurrentNOE={() => {}}
+                setErrorAlert={() => { }}
             />
         );
     });
@@ -29,5 +31,22 @@ describe('<NumberOfEvents /> Component', () => {
         const user = userEvent.setup();
         await user.type(input, '{backspace}{backspace}10');
         expect(input).toHaveValue('10');
+    });
+});
+
+describe('NumberOfEvents /> integration', () => {
+    test('updates the number of events displayed when the user changes the number of events input', async () => {
+        const user = userEvent.setup();
+        const AppComponent = render(<App />);
+        const AppDOM = AppComponent.container.firstChild;
+
+        const NumberOfEventsDOM = AppDOM.querySelector('#number-of-events');
+        const NumberOfEventsInput = within(NumberOfEventsDOM).queryByTestId('numberOfEventsInput');
+
+        await user.type(NumberOfEventsInput, '{backspace}{backspace}10');
+
+        const EventListDOM = AppDOM.querySelector('#event-list');
+        const allRenderedEventItems = within(EventListDOM).queryAllByRole('listitem');
+        expect(allRenderedEventItems.length).toBe(10);
     });
 });
