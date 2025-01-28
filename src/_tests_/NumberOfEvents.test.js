@@ -1,8 +1,7 @@
 import React from "react";
-import { render,within } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import NumberOfEvents from "../components/NumberOfEvents";
 import userEvent from "@testing-library/user-event";
-import App from "../App";
 
 describe('<NumberOfEvents /> Component', () => {
     let NumberOfEventsComponent;
