@@ -37,8 +37,7 @@ describe('<CitySearch /> component', () => {
         const allEvents = await getEvents();
         const allLocations = extractLocations(allEvents);
         CitySearchComponent.rerender(<CitySearch 
-            allLocations={allLocations} 
-            setCurrentCity={() => { }}
+            allLocations={allLocations}
             setInfoAlert={() => { }}
         />);
 
