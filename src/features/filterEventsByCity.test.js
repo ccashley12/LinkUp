@@ -4,6 +4,7 @@ import { render, within, waitFor } from '@testing-library/react';
 import App from '../App';
 import mockData from '../mock-data';
 import userEvent from '@testing-library/user-event';
+import { getEvents } from '../api';
 
 const feature = loadFeature('./src/features/filterEventsByCity.feature');
 
@@ -89,8 +90,9 @@ defineFeature(feature, test => {
         and('the user should receive a list of upcoming events in that city', async () => {
             const EventListDOM = AppDOM.querySelector('#event-list');
             const EventListItems = within(EventListDOM).queryAllByRole('listitem');
+            const allEvents = await getEvents();
 
-            const berlinEvents = mockData.filter(event => event.location === citySearchInput.value)
+            const berlinEvents = allEvents.filter(event => event.location === citySearchInput.value)
             expect(EventListItems).toHaveLength(berlinEvents.length);
         });
     });
