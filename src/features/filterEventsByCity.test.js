@@ -2,7 +2,6 @@ import React from 'react';
 import { loadFeature, defineFeature } from 'jest-cucumber';
 import { render, within, waitFor } from '@testing-library/react';
 import App from '../App';
-import mockData from '../mock-data';
 import userEvent from '@testing-library/user-event';
 import { getEvents } from '../api';
 
@@ -50,8 +49,10 @@ defineFeature(feature, test => {
         });
 
         then('the user should receive a list of cities (suggestions) that match what they have typed', async () => {
-            const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem'); 
-            expect(suggestionListItems).toHaveLength(2);
+            await waitFor(() => {
+                const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem'); 
+                expect(suggestionListItems).toHaveLength(2);
+            })
         });
     });
 
