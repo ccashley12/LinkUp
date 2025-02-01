@@ -4,13 +4,13 @@ import {
     PieChart,
     Pie,
     Cell,
-    Legend,
-    Tooltip,
+    Legend
 } from 'recharts';
 
 const EventGenresChart = ({ events }) => {
     const [data, setData] = useState([]);
     const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'Angular'];
+    const colors = ['#DD0000', '#00DD00', '#0000DD', '#DDDD00', '#DD00DD'];
 
     useEffect(() => {
         setData(getData());
@@ -27,14 +27,7 @@ const EventGenresChart = ({ events }) => {
         return data;
     };
 
-    const renderCustomizedLabel = ({
-        cx,
-        cy,
-        midAngle,
-        outerRadius,
-        percent,
-        index
-    }) => {
+    const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, percent, index }) => {
         const RADIAN = Math.PI / 180;
         const radius = outerRadius;
         const x = cx + radius * Math.cos(-midAngle * RADIAN) * 1.07;
@@ -61,9 +54,13 @@ const EventGenresChart = ({ events }) => {
                     fill="#8884d8"
                     labelLine={false}
                     label={renderCustomizedLabel}
-                    outerRadius={130}
-                />
-                <Tooltip />
+                    outerRadius={150}
+                >
+                    {data.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                    ))}
+                </Pie>
+                <Legend verticalAlign="bottom" height={36} />
             </PieChart>
         </ResponsiveContainer>
   );
