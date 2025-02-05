@@ -1,14 +1,39 @@
 import React from 'react';
 import Event from './Event';
+import PropTypes from 'prop-types';
 
 const EventList = ({ events }) => {
-    return (
-        <ul id="event-list" className="event-list-container">
-            {events
-                ? events.map((event)  => <Event key={event.id} event={event} />)
-                : null}
-        </ul>
-    );
-}
+	return (
+		<div className="event-container">
+			<ul id="event-list">
+				{events.map((event) => (
+					<li
+						key={event.id}
+						className="event-item">
+						<Event event={event} />
+					</li>
+				))}
+			</ul>
+		</div>
+	);
+};
+
+EventList.propTypes = {
+	events: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string.isRequired,
+			summary: PropTypes.string.isRequired,
+			location: PropTypes.string,
+			start: PropTypes.shape({
+				dateTime: PropTypes.string,
+			}),
+			end: PropTypes.shape({
+				dateTime: PropTypes.string,
+			}),
+			description: PropTypes.string,
+		})
+	).isRequired,
+};
+
 
 export default EventList;
