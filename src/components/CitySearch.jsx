@@ -54,7 +54,8 @@ const CitySearch = ({ allLocations, onCityChange, setInfoAlert }) => {
 			id="city-search"
 			className="filter-item">
 			<label
-				htmlFor="city">
+				htmlFor="city"
+				className="city-label">
 				Search for a city
 			</label>
 			<div className="inputAndSubmit">
