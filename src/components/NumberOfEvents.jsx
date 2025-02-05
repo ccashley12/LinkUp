@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const NumberOfEvents = ({ setCurrentNOE, currentEventCount, setErrorAlert }) => {
   const [eventCount, setEventCount] = useState(currentEventCount || 32);
@@ -70,5 +71,12 @@ const NumberOfEvents = ({ setCurrentNOE, currentEventCount, setErrorAlert }) => 
 		</div>
   );
 };
+
+NumberOfEvents.propTypes = {
+	setCurrentNOE: PropTypes.func.isRequired,
+	currentEventCount: PropTypes.number,
+	setErrorAlert: PropTypes.func.isRequired,
+};
+
 
 export default NumberOfEvents;
