@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-globals */
-
 // This service worker can be customized!
 // See https://developers.google.com/web/tools/workbox/modules
 // for the list of available Workbox modules, or add any other
@@ -25,37 +23,34 @@ precacheAndRoute(self.__WB_MANIFEST);
 // are fulfilled with your index.html shell. Learn more at
 // https://developers.google.com/web/fundamentals/architecture/app-shell
 const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$');
-const handler = createHandlerBoundToURL('/index.html');
+const handler = createHandlerBoundToURL('index.html');
 
-registerRoute(
-  ({ request, url }) => {
-    if (request.mode !== 'navigate') return false;
-    if (url.pathname.startsWith('/_')) return false;
-    if (url.pathname.match(fileExtensionRegexp)) return false;
-    return true;
-  },
-  handler
-);
+registerRoute(({ request, url }) => {
+	if (request.mode !== 'navigate') return false;
+	if (url.pathname.startsWith('/_')) return false;
+	if (url.pathname.match(fileExtensionRegexp)) return false;
+	return true;
+}, handler);
 
 // An example runtime caching route for requests that aren't handled by the
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
-  // Add in any other file extensions or routing criteria as needed.
-  ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
-  new StaleWhileRevalidate({
-    cacheName: 'images',
-    plugins: [
-      // Ensure that once this runtime cache reaches a maximum size the
-      // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50 }),
-    ],
-  })
+	({ url }) =>
+		url.origin === self.location.origin &&
+		url.pathname.startsWith('/assets/') &&
+		(url.pathname.endsWith('.png') || url.pathname.endsWith('.svg')),
+	new StaleWhileRevalidate({
+		cacheName: 'images',
+		plugins: [new ExpirationPlugin({ maxEntries: 50 })],
+	})
 );
 
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
+	if (event.data && event.data.type === 'SKIP_WAITING') {
+		self.skipWaiting();
+	}
 });
+
+// Any other custom service worker logic can go here.
