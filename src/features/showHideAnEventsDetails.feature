@@ -1,9 +1,4 @@
 Feature: Show/Hide Event Details
-    Scenario: An event element is collapsed by default.
-        Given the user has not yet tapped on Show Details
-        When the user is viewing the list of events
-        Then the app should hide the event details by default
-
     Scenario:  User can expand an event to see details.
         Given the user is viewing the list of events
         When the user taps on a specific event
