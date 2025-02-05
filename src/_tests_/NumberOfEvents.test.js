@@ -1,34 +1,80 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import NumberOfEvents from "../components/NumberOfEvents";
-import userEvent from "@testing-library/user-event";
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import NumberOfEvents from '../components/NumberOfEvents';
 
-describe('<NumberOfEvents /> Component', () => {
-    let NumberOfEventsComponent;
-    beforeEach(() => {
-        NumberOfEventsComponent = render(
-            <NumberOfEvents
-                currentNOE={32} 
-                setCurrentNOE={() => {}}
-                setErrorAlert={() => { }}
-            />
-        );
-    });
+describe('<NumberOfEvents />', () => {
+	let setCurrentNOE;
+	let setErrorAlert;
+	let container;
+	let inputElement;
+	let submitButton;
 
-    test('component contains input textbox', () => {
-        const input = NumberOfEventsComponent.queryByRole('textbox');
-        expect(input).toBeInTheDocument();
-    });
-    
-    test('ensures the default value of textbox is 32', () => {
-        const input = NumberOfEventsComponent.queryByRole('textbox');
-        expect(input).toHaveValue('32');
-    });
+	beforeEach(() => {
+		setCurrentNOE = jest.fn();
+		setErrorAlert = jest.fn();
 
-    test('textbox value changes when user updates input', async () => {
-        const input = NumberOfEventsComponent.getByTestId('numberOfEventsInput');
-        const user = userEvent.setup();
-        await user.type(input, '{backspace}{backspace}10');
-        expect(input).toHaveValue('10');
-    });
+		const renderResult = render(
+			<NumberOfEvents
+				setCurrentNOE={setCurrentNOE}
+				currentEventCount={32}
+				setErrorAlert={setErrorAlert}
+			/>
+		);
+		container = renderResult.container;
+		inputElement = container.querySelector('#numberOfEvents');
+		submitButton = container.querySelector('button');
+	});
+
+	it('contains a textbox with the correct role', () => {
+		expect(inputElement).toHaveAttribute('role', 'textbox');
+	});
+
+	it('default value is 32', () => {
+		expect(inputElement.value).toBe('32');
+	});
+
+	it('value changes when user types in it and submits', async () => {
+		const user = userEvent.setup();
+		expect(inputElement.value).toBe('32');
+
+		await user.clear(inputElement);
+		await user.type(inputElement, '10');
+		expect(inputElement.value).toBe('10');
+
+		await user.click(submitButton);
+		expect(setCurrentNOE).toHaveBeenCalledWith(10);
+		expect(setCurrentNOE).toHaveBeenCalledTimes(1);
+	});
+
+	it('updates event count when currentEventCount prop changes', () => {
+		const { container } = render(
+			<NumberOfEvents
+				setCurrentNOE={setCurrentNOE}
+				currentEventCount={50}
+				setErrorAlert={setErrorAlert}
+			/>
+		);
+		const inputElement = container.querySelector('#numberOfEvents');
+		expect(inputElement.value).toBe('50');
+	});
+	it('shows error alert when input value is not a valid number', async () => {
+		const user = userEvent.setup();
+		await user.clear(inputElement);
+		await user.type(inputElement, 'invalid');
+
+		await user.click(submitButton);
+
+		expect(setErrorAlert).toHaveBeenCalledWith('Please enter a valid number greater than zero.');
+	});
+
+	it('shows error alert when input value is less than or equal to zero', async () => {
+		const user = userEvent.setup();
+		await user.clear(inputElement);
+		await user.type(inputElement, '-1');
+
+		await user.click(submitButton);
+
+		expect(setErrorAlert).toHaveBeenCalledWith('Please enter a valid number greater than zero.');
+	});
 });
