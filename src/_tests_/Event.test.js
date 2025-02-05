@@ -4,62 +4,86 @@ import userEvent from "@testing-library/user-event";
 import { render } from '@testing-library/react';
 import mockData from "../mock-data";
 
-const event = mockData[0];
-
 describe('<Event /> component', () => {
-    let EventComponent;
-    beforeEach(() => {
-        EventComponent = render(<Event event={event}/>);
-    });
-    
-    test('renders event title', () => {
-        const eventTitle = EventComponent.queryByText(event.summary);
-        expect(eventTitle).toBeInTheDocument();
-    });
+	let EventComponent;
+	const event = mockData && mockData[0];
 
-    test('renders event start time', () => {
-        const eventTime = EventComponent.queryByText(event.created);
-        expect(eventTime).toBeInTheDocument();
-    });
+	beforeEach(() => {
+		EventComponent = render(<Event event={event} />);
+	});
 
-    test('renders event location', () => {
-        const eventLocation = EventComponent.queryByText(event.location);
-        expect(eventLocation).toBeInTheDocument();
-    });
-    
-    // Show Details button
-    test('render event details button', () => {
-        const detailButton = EventComponent.queryByText('Show Details');
-        expect(detailButton).toBeInTheDocument();
-    });
-    
-    test("event's details are hidden by default", () => {
-        const eventDetails = EventComponent.container.querySelector('.details');
-        expect(eventDetails).not.toBeInTheDocument();
-    });
+	it('renders title', () => {
+		const eventTitle = EventComponent.queryByText(event.summary);
+		expect(eventTitle).toBeInTheDocument();
+	});
 
-    test('show details after user clicks on button "Show Details"', async () => {
-        const user = userEvent.setup();
-        
-        const showDetailButton = EventComponent.queryByText('Show Details');
-        await user.click(showDetailButton);
+	it('renders start time', () => {
+		const formattedTime = new Date(mockData[0].start.dateTime).toLocaleString();
+		expect(EventComponent.queryByText(`Start: ${formattedTime}`)).toBeInTheDocument();
+	});
 
-        const eventDetailsDom = EventComponent.container.firstChild;
-        const eventDetails = eventDetailsDom.querySelector('.eventDetails');
-        expect(eventDetails).toBeInTheDocument();
-    });
+	it('renders "Start time not available" when start dateTime is missing', () => {
+		const eventWithoutStart = { ...mockData[0], start: {} };
+		const { queryByText } = render(<Event event={eventWithoutStart} />);
+		expect(queryByText('Start: Start time not available')).toBeInTheDocument();
+	});
 
-    test('hide details after user clicks on button "Hide details"', async () => {
-        const user = userEvent.setup();
-        
-        const showDetailButton = EventComponent.queryByText('Show Details');
-        await user.click(showDetailButton);
-        
-        const hideDetailButton = EventComponent.queryByText('Hide Details');
-        await user.click(hideDetailButton);
+	it('renders end time', () => {
+		const formattedEndTime = new Date(mockData[0].end.dateTime).toLocaleString();
+		expect(EventComponent.queryByText(`End: ${formattedEndTime}`)).toBeInTheDocument();
+	});
 
-        const eventDetailsDom = EventComponent.container.firstChild;
-        const eventDetails = eventDetailsDom.querySelector('.eventDetails');
-        expect(eventDetails).not.toBeInTheDocument();
-    });
+	it('renders "End time not available" when end dateTime is missing', () => {
+		const eventWithoutEnd = { ...mockData[0], end: {} };
+		const { queryByText } = render(<Event event={eventWithoutEnd} />);
+		expect(queryByText('End: End time not available')).toBeInTheDocument();
+	});
+
+	it('renders location', () => {
+		expect(EventComponent.queryByText(mockData[0].location)).toBeInTheDocument;
+	});
+
+	it('renders fallback location message when location is missing', () => {
+		const eventWithoutLocation = { ...mockData[0], location: null };
+		const { queryByText } = render(<Event event={eventWithoutLocation} />);
+		expect(queryByText('Location: No location provided')).toBeInTheDocument();
+	});
+
+	it('renders "More info" button', () => {
+		const detailButton = EventComponent.queryByText('More info');
+		expect(detailButton).toBeInTheDocument();
+	});
+
+	it("event's details hidden by default", () => {
+		const eventDetails = EventComponent.container.querySelector('.eventDetails');
+		expect(eventDetails).not.toBeInTheDocument();
+	});
+
+	it('user clicks "More info" button', async () => {
+		const user = userEvent.setup();
+
+		const showDetailButton = EventComponent.queryByText('More info');
+		await user.click(showDetailButton);
+
+		const eventDetails = EventComponent.container.querySelector('.eventDetails');
+		expect(eventDetails).toBeInTheDocument();
+	});
+
+	it('user clicks "Less info" button', async () => {
+		const user = userEvent.setup();
+
+		const showDetailButton = EventComponent.queryByText('More info');
+		await user.click(showDetailButton);
+
+		const hideDetailButton = EventComponent.queryByText('Less info');
+		await user.click(hideDetailButton);
+
+		const eventDetails = EventComponent.container.querySelector('.eventDetails');
+		expect(eventDetails).not.toBeInTheDocument();
+	});
+
+	it('renders fallback message when event is null', () => {
+		const { getByText } = render(<Event event={null} />);
+		expect(getByText('No event data available')).toBeInTheDocument();
+	});
 });
