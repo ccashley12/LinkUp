@@ -87,7 +87,7 @@ label {
   }
 }
 
-.eventSummary {
+.eventContainer {
   padding: 10px 10px 35px;
   margin-bottom: 10px;
   text-align: left;
@@ -96,14 +96,27 @@ label {
   position: relative;
 }
 
-.details-btn {
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
-  padding: 5px 8px;
-  border-radius: 4px;
-  outline: none;
-  cursor: pointer;
+.eventDetails {
+	margin-top: 1.5rem;
+	color: #666;
+	text-align: justify;
+	font-weight: 300;
+}
+.event-item button {
+	box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.5);
+	background-color: #fff;
+	border: 2px solid #d81e5b;
+	color: #d81e5b;
+	padding: 5px 15px;
+	border-radius: 5px;
+	margin-top: 0.5rem;
+}
+.event-item button:hover,
+.event-item button:focus {
+	border-radius: 15px;
+}
+.event-item button:active {
+	background-color: #f9f9f9;
 }
 
 .alerts-container {
