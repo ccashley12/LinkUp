@@ -1,35 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const NumberOfEvents = ({ setCurrentNOE, setErrorAlert }) => {
-  const [eventCount, setEventCount] = useState(32);
+const NumberOfEvents = ({ setCurrentNOE, currentEventCount, setErrorAlert }) => {
+  const [eventCount, setEventCount] = useState(currentEventCount || 32);
+
+  useEffect(() => {
+		if (currentEventCount !== undefined) {
+			setEventCount(currentEventCount);
+		}
+	}, [currentEventCount]);
 
   const handleInputChange = (e) => {
-    const value = e.target.value;
-    if (!isNaN(value) && value >= 0) {
-      setEventCount(value); 
-      setCurrentNOE(parseInt(value, 10)); 
-    }
+		const value = e.target.value;
+		if (value === '') {
+			setEventCount('');
+			setErrorAlert('');
+			return;
+		}
 
-    let infoText;
-        if (e.target.value <= 0) {
-            infoText = "Only a positive number is allowed"
-        } else {
-            infoText = ""
-        }
-        setErrorAlert(infoText);
+		if (/^[0-9]*$/.test(value)) {
+			const parsedValue = Math.max(0, parseInt(value, 10));
+			setEventCount(parsedValue);
+			if (parsedValue > 0) {
+				setErrorAlert('');
+			}
+		} else {
+			setErrorAlert('Please enter a valid number greater than zero.');
+		}
+	};;
 
-  };
+  const handleSubmit = () => {
+		if (eventCount === '' || isNaN(eventCount) || eventCount <= 0) {
+			setErrorAlert('Please enter a valid number greater than zero.');
+			return;
+		}
+
+		const maxEventCount = 500;
+		if (eventCount > maxEventCount) {
+			setErrorAlert(`Number of events cannot exceed ${maxEventCount}.`);
+			return;
+		}
+
+		setCurrentNOE(Number(eventCount));
+	};
 
   return (
-    <div id="number-of-events">
-      <label htmlFor="event-count">Number of Events:</label>
-      <input
-        id="event-count"
-        type="number"
-        value={eventCount}
-        onChange={handleInputChange}
-      />
-    </div>
+    <div className="filter-item">
+			<label
+				htmlFor="numberOfEvents"
+				className="numberOfEvents-label">
+				Number of Events
+			</label>
+			<div className="inputAndSubmit">
+				<input
+					type="text"
+					id="numberOfEvents"
+					value={eventCount}
+					onChange={handleInputChange}
+					role="textbox"
+					aria-label="Number of events"
+					className="numberOfEvents-input"
+				/>
+				<button
+					onClick={handleSubmit}
+					className="numberOfEvents-submit"
+					aria-label="Submit number of events">
+					Submit
+				</button>{' '}
+			</div>
+		</div>
   );
 };
 
