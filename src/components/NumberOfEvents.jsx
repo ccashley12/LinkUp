@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const NumberOfEvents = ({ setCurrentNOE, currentEventCount, setErrorAlert }) => {
-  const [eventCount, setEventCount] = useState(currentEventCount || 32);
+  const [eventCount, setEventCount] = useState(currentEventCount);
 
   useEffect(() => {
 		if (currentEventCount !== undefined) {
@@ -10,8 +10,8 @@ const NumberOfEvents = ({ setCurrentNOE, currentEventCount, setErrorAlert }) => 
 		}
 	}, [currentEventCount]);
 
-  const handleInputChange = (e) => {
-		const value = e.target.value;
+  const handleInputChange = (event) => {
+		const value = event.target.value;
 		if (value === '') {
 			  setEventCount('');
 			  setErrorAlert('');
