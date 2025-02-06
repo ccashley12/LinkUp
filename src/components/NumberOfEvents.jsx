@@ -6,39 +6,39 @@ const NumberOfEvents = ({ setCurrentNOE, currentEventCount, setErrorAlert }) => 
 
   useEffect(() => {
 		if (currentEventCount !== undefined) {
-			setEventCount(currentEventCount);
+		    setEventCount(currentEventCount);
 		}
 	}, [currentEventCount]);
 
   const handleInputChange = (e) => {
 		const value = e.target.value;
 		if (value === '') {
-			setEventCount('');
-			setErrorAlert('');
-			return;
+			  setEventCount('');
+			  setErrorAlert('');
+			  return;
 		}
 
 		if (/^[0-9]*$/.test(value)) {
-			const parsedValue = Math.max(0, parseInt(value, 10));
-			setEventCount(parsedValue);
-			if (parsedValue > 0) {
-				setErrorAlert('');
-			}
+			  const parsedValue = Math.max(0, parseInt(value, 10));
+			  setEventCount(parsedValue);
+			  if (parsedValue > 0) {
+				  setErrorAlert('');
+			  }
 		} else {
-			setErrorAlert('Please enter a valid number greater than zero.');
+			  setErrorAlert('Please enter a valid number greater than zero.');
 		}
-	};;
+	};
 
   const handleSubmit = () => {
 		if (eventCount === '' || isNaN(eventCount) || eventCount <= 0) {
-			setErrorAlert('Please enter a valid number greater than zero.');
-			return;
+			  setErrorAlert('Please enter a valid number greater than zero.');
+			  return;
 		}
 
 		const maxEventCount = 500;
 		if (eventCount > maxEventCount) {
-			setErrorAlert(`Number of events cannot exceed ${maxEventCount}.`);
-			return;
+			  setErrorAlert(`Number of events cannot exceed ${maxEventCount}.`);
+			  return;
 		}
 
 		setCurrentNOE(Number(eventCount));
