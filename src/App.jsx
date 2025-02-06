@@ -88,9 +88,9 @@ const App = () => {
         <div className="App">
           {loading && <p className="loading">Loading...</p>}
           <div className="alerts-container">
-            {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
-            {errorAlert.length ? <ErrorAlert text={errorAlert}/> : null}
-            {warningAlert.length ? <WarningAlert text={warningAlert}/> : null}
+            {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
+            {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}
+            {warningAlert.length ? <WarningAlert text={warningAlert} /> : null}
           </div>
           <div className="filter-container">
             <CitySearch 
