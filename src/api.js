@@ -43,9 +43,9 @@ export const getEvents = async () => {
 
     }
 
-    if (window.location.href.startsWith('http://localhost')) {
-        return mockData;
-    }
+    // if (window.location.href.startsWith('http://localhost')) {
+    //     return mockData;
+    // }
 
     const token = await getAccessToken();
     if (token) {
@@ -113,7 +113,7 @@ const getToken = async (code) => {
 };
 
 export const getAccessToken = async () => {
-    const accessToken = localStorage.getItem('acces_token');
+    const accessToken = localStorage.getItem('access_token');
     const tokenCheck = accessToken && (await checkToken(accessToken));
 
     if (!accessToken || tokenCheck.error) {
