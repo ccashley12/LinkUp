@@ -84,8 +84,6 @@ const App = () => {
 		setFilteredEvents(filtered.slice(0, num));
 	};
 
-	console.log("Catch Me");
-
     return (
         <div className="App">
           {loading && <p className="loading">Loading...</p>}
